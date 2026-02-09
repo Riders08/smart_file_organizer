@@ -1,6 +1,6 @@
 # Fichier main
-from tools import lengthFiles, printAllFiles, printAllFolder, detectFolder, getFiles, getFolders, printAllExtensionFiles
 import os
+from tools import *
 
 racine = "./test";
 
@@ -12,11 +12,14 @@ print("NUMBER OF ELEMENTS");
 print(lengthFiles(ListFiles));
 print("======================================================");
 print("FOLDER");
-if(detectFolder(racine)):
+if(detectFoldersDefault(racine, ListFiles)):
+    print("Les dossiers sont déjà là");
     printAllFolder(ListFolders);
 else:
-    print("NO FOLDER FIND");
+    print("Il manque des dossiers");
+    create_default_folder(racine, ListFiles);
 print("======================================================");
 print("FILES");
 printAllExtensionFiles(ListFiles);
 print("======================================================");
+sort(racine, ListFiles);
