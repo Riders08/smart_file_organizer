@@ -3,6 +3,7 @@ import os
 from tools import *
 
 racine = "./test";
+log = "Rapport.txt";
 
 ListFiles = getFiles(racine);
 ListFolders = getFolders(racine);
@@ -22,4 +23,8 @@ print("======================================================");
 print("FILES");
 printAllExtensionFiles(ListFiles);
 print("======================================================");
-sort(racine, ListFiles);
+if(detectLog(log)):
+    sort(racine, ListFiles, log);
+else:
+    create_default_rapport(log);
+    sort(racine, ListFiles, log);

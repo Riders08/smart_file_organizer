@@ -1,1 +1,62 @@
-test
+LOGS DES DEPLACEMENTS
+
+2026-02-10 16:16:54.474768
+LOG: Deplacement d'un fichier 🎬 => 12564046_1080_1920_30fps.mkv située test/12564046_1080_1920_30fps.mkv vers la destination test/Video/12564046_1080_1920_30fps.mkv de part son type Video via son extension .mkv
+
+2026-02-10 16:16:54.491818
+LOG: Deplacement d'un fichier 🎵 => Future Royalty - Take Whats Mine.mp3 située test/Future Royalty - Take Whats Mine.mp3 vers la destination test/Music/Future Royalty - Take Whats Mine.mp3 de part son type Music via son extension .mp3
+
+2026-02-10 16:16:54.502877
+LOG: Deplacement d'un fichier 📄 => Test.txt située test/Test.txt vers la destination test/Documents/Test.txt de part son type Documents via son extension .txt
+
+2026-02-10 16:16:54.511141
+LOG: Deplacement d'un fichier 📄 => Test2.txt située test/Test2.txt vers la destination test/Documents/Test2.txt de part son type Documents via son extension .txt
+
+2026-02-10 16:16:54.520485
+LOG: Deplacement d'un fichier 📦 => TestZip.zip située test/TestZip.zip vers la destination test/Archives/TestZip.zip de part son type Archives via son extension .zip
+
+2026-02-10 16:16:54.530555
+LOG: Deplacement d'un fichier 🖼️ => Your Name.jpg située test/Your Name.jpg vers la destination test/Images/Your Name.jpg de part son type Images via son extension .jpg
+
+2026-02-10 16:18:19.243928
+LOG: Deplacement d'un fichier 🎬 => 12564046_1080_1920_30fps.mkv située test/12564046_1080_1920_30fps.mkv vers la destination test/Video/12564046_1080_1920_30fps.mkv de part son type Video via son extension .mkv
+
+2026-02-10 16:18:19.256630
+LOG: Deplacement d'un fichier 🎵 => Future Royalty - Take Whats Mine.mp3 située test/Future Royalty - Take Whats Mine.mp3 vers la destination test/Music/Future Royalty - Take Whats Mine.mp3 de part son type Music via son extension .mp3
+
+2026-02-10 16:18:19.264893
+LOG: Deplacement d'un fichier ❓ => Slurp.slurp située test/Slurp.slurp vers la destination test/Others/Slurp.slurp de part son type Others via son extension .slurp
+
+2026-02-10 16:18:19.289632
+LOG: Deplacement d'un fichier 📄 => Test.txt située test/Test.txt vers la destination test/Documents/Test.txt de part son type Documents via son extension .txt
+
+2026-02-10 16:18:19.299588
+LOG: Deplacement d'un fichier 📄 => Test2.txt située test/Test2.txt vers la destination test/Documents/Test2.txt de part son type Documents via son extension .txt
+
+2026-02-10 16:18:19.311734
+LOG: Deplacement d'un fichier 📦 => TestZip.zip située test/TestZip.zip vers la destination test/Archives/TestZip.zip de part son type Archives via son extension .zip
+
+2026-02-10 16:18:19.324161
+LOG: Deplacement d'un fichier 🖼️ => Your Name.jpg située test/Your Name.jpg vers la destination test/Images/Your Name.jpg de part son type Images via son extension .jpg
+
+2026-02-10 16:22:07
+LOG: Deplacement d'un fichier 🎬 => 12564046_1080_1920_30fps.mkv située test/12564046_1080_1920_30fps.mkv vers la destination test/Video/12564046_1080_1920_30fps.mkv de part son type Video via son extension .mkv
+
+2026-02-10 16:22:07
+LOG: Deplacement d'un fichier 🎵 => Future Royalty - Take Whats Mine.mp3 située test/Future Royalty - Take Whats Mine.mp3 vers la destination test/Music/Future Royalty - Take Whats Mine.mp3 de part son type Music via son extension .mp3
+
+2026-02-10 16:22:07
+LOG: Deplacement d'un fichier ❓ => Slurp.slurp située test/Slurp.slurp vers la destination test/Others/Slurp.slurp de part son type Others via son extension .slurp
+
+2026-02-10 16:22:07
+LOG: Deplacement d'un fichier 📄 => Test.txt située test/Test.txt vers la destination test/Documents/Test.txt de part son type Documents via son extension .txt
+
+2026-02-10 16:22:07
+LOG: Deplacement d'un fichier 📄 => Test2.txt située test/Test2.txt vers la destination test/Documents/Test2.txt de part son type Documents via son extension .txt
+
+2026-02-10 16:22:07
+LOG: Deplacement d'un fichier 📦 => TestZip.zip située test/TestZip.zip vers la destination test/Archives/TestZip.zip de part son type Archives via son extension .zip
+
+2026-02-10 16:22:07
+LOG: Deplacement d'un fichier 🖼️ => Your Name.jpg située test/Your Name.jpg vers la destination test/Images/Your Name.jpg de part son type Images via son extension .jpg
+

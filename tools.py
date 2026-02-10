@@ -1,9 +1,12 @@
 # Fichiers avec fonctions et tous autres types d'outils nécessaire au bon fonctionnement du projet
-from config import list_extension
+from config import list_extension, list_icon
 import os
 import shutil
+import datetime
 from pathlib import Path
 
+
+# GETTERS/SETTERS
 
 # Génére le chemin du fichier
 def getSource(root, file):
@@ -34,6 +37,11 @@ def getFolders(root):
 def getExtension(file):
     return Path(file.casefold()).suffix;
 
+#renvoie l'icone qui illustre le type du fichier
+def getIcon(file):
+    type_file = getTypeFile(file);
+    return list_icon.get(type_file, "❓");
+
 # renvoie le type correspondant à l'extension donnée
 def getTypeExtension(extension):
     for types in list_extension: 
@@ -46,11 +54,17 @@ def getTypeExtension(extension):
 def getTypeFile(file):
     return getTypeExtension(getExtension(file));
 
+# revoie l'heure exacte
+def getTime():
+    return datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S");
 
+#OTHERS
 
 # Renvoie le nombre de fichiers
 def lengthFiles(files):
     return len(files);
+
+# AFFICHAGE
 
 # Affiche les fichiers et dossiers présents des listes et les extensions 
 def printAllFiles(files):
@@ -63,6 +77,7 @@ def printAllExtensionFiles(files):
     for file in files:
         print(file, " => ", getExtension(file), " => ", getTypeFile(file));
 
+# CHECKS
 
 # Detect si il y a un dossier
 def detectFolder(root):
@@ -90,6 +105,11 @@ def detectFileOther(files):
             return True;
     return False;
 
+# Verifie si on a bien le fichier de logs
+def detectLog(log):
+    return os.path.exists(log);
+
+# INITIALISATION DES DOSSIERS
 
 # Initialisation des dossiers
 def create_default_folder(root, files):
@@ -106,8 +126,16 @@ def create_default_folder_other(root):
     if(os.path.exists(Path(root) / "Others") == False):
         os.mkdir(Path(root) / "Others");
 
+def create_default_rapport(log):
+    rapport = open(log, "w");
+    with open(log, "a") as rapport:
+        rapport.write("LOGS DES DEPLACEMENTS\n\n");
+    rapport.close();
+
+# TRI
+
 # Fonction qui tri les fichier du dossiers choisi dans les dossiers correspondant à leur nature
-def sort(root, files):
+def sort(root, files, log):
     folders = list(list_extension.keys());
     if(detectFileOther(files)):
         folders.append("Others");
@@ -125,3 +153,12 @@ def sort(root, files):
             destination = Path(root) / type_file / new_name;
             counter+=1;
         shutil.move(source, destination);
+        DetailsMove(root, file, destination, log);
+
+# LOGS
+def DetailsMove(root, file, destination, log):
+    source = getSource(root, file);
+    with open(log, "a") as rapport:
+        rapport.write(f"{getTime()}\n");
+        rapport.write(f"LOG: Deplacement d'un fichier {getIcon(file)} => {file} située {source} vers la destination {destination} de part son type {getTypeFile(file)} via son extension {getExtension(file)}\n\n");
+    rapport.close();
