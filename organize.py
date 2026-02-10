@@ -64,5 +64,5 @@ else:
     print("TRI EFFECTUÉ")    
 print("======================================================");
 if(verbose):
-    print(f"PRÉCISION DES FICHIERS SITUÉS DANS {racine}")
-    printAllExtensionFiles(ListFiles);
+    print(f"PRÉCISION DES FICHIERS SITUÉS DANS {racine}");
+    printAllExtensionFiles(ListFiles); # faire en sorte que ce qui est affiché soit équivalent à ce que l'on peut voir dans le fichier rapport.txt (avec des icônes etc...)
