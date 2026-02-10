@@ -64,6 +64,15 @@ def getTime():
 def lengthFiles(files):
     return len(files);
 
+# Renvoie le nombre de dossiers
+def lengthFolders(folders):
+    list_folders_require = list(list_extension.keys());
+    compteur = 0;
+    for f in folders:
+        if(f != "Others" and f not in list_folders_require):
+            compteur+=1;
+    return compteur;
+
 # AFFICHAGE
 
 # Affiche les fichiers et dossiers présents des listes et les extensions 
@@ -76,6 +85,9 @@ def printAllFolder(folders):
 def printAllExtensionFiles(files):
     for file in files:
         print(file, " => ", getExtension(file), " => ", getTypeFile(file));
+def printMoveFileLogic(files):
+    for file in files:
+        print(f"[DRY-RUN] Le fichier nommé {file} irait dans {getTypeFile(file)}");
 
 # CHECKS
 
