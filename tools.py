@@ -12,6 +12,7 @@ from pathlib import Path
 def getSource(root, file):
     return Path(root) / file;
 
+
 def fileWithoutExtension(file):
     return file.replace(getExtension(file),"");
 
@@ -82,13 +83,27 @@ def printAllFiles(files):
 def printAllFolder(folders):
     for element in folders:
         print(element);
-def printAllExtensionFiles(files):
+def printAllExtensionFiles(root,files):
     for file in files:
-        print(file, " => ", getExtension(file), " => ", getTypeFile(file));
+        print(f"\nLe fichier {file}, \n    {getIcon(file)} => située : {getSource(root ,file)},\n        et qui a pour extension {getExtension(file)} doit aller dans le dossier : {getTypeFile(file)}");    
 def printMoveFileLogic(files):
     for file in files:
         print(f"[DRY-RUN] Le fichier nommé {file} irait dans {getTypeFile(file)}");
+def printDataFolderDefault(root):
+    list_folders_default = list(list_extension.keys());
+    list_folders = getFolders(root);
+    for folder in list_folders:
+        if folder in list_folders_default or folder == "Others": 
+            print(f"{folder} => 📁: {lengthFiles(getFolders(Path(root)/folder))} dossier(s) présent(s), 📄: {lengthFiles(getFiles(Path(root)/folder))} fichier(s) présent(s)");
 
+def printSummary(root):
+    print("SUMMARY");
+    print(f"{lengthFiles(getFiles(root))} ont été déplacés:"); # MARCHE PAS ENCORE
+    list_folders_default = list(list_extension.keys());
+    list_folders = getFolders(root);
+    for folder in list_folders:
+        if folder in list_folders_default or folder == "Others": 
+            print(f"{folder} => 📁: {lengthFiles(getFolders(Path(root)/folder))} dossier(s) présent(s), 📄: {lengthFiles(getFiles(Path(root)/folder))} fichier(s) présent(s)");
 # CHECKS
 
 # Detect si il y a un dossier
@@ -155,7 +170,7 @@ def sort(root, files, log):
         type_file = getTypeFile(file);
         source = getSource(root, file);
         folder_to_push = Path(root) / type_file;
-        destination = Path(root) / type_file / file;
+        destination = folder_to_push / file;
         counter = 1;
         while(destination.exists()):
             if(counter == 1):
