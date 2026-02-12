@@ -65,6 +65,9 @@ def getTime():
 def lengthFiles(files):
     return len(files);
 
+def lengthFilesToMove(files):
+    return len(files);
+
 # Renvoie le nombre de dossiers
 def lengthFolders(folders):
     list_folders_require = list(list_extension.keys());

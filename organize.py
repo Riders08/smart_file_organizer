@@ -24,11 +24,23 @@ parser.add_argument(
     help="Affiche les fichiers déplacés dans le terminal"
 );
 
+parser.add_argument(
+    "--log",
+    default="Rapport",
+    help="Fichier log qui genère un historique de l'exécution du programme"
+);
+
 args = parser.parse_args();
 
 racine = args.path; #Chemin du dossier
 dry_run = args.dry_run; #Mode simulation
 verbose = args.verbose; #Mode affichage
+# Fichier log
+log = Path(args.log);
+if log.suffix == "":
+    log = log.with_suffix(".log"); 
+
+
 
 print("======================================================");
 print("INITIALISATION...");
@@ -39,8 +51,7 @@ print("======================================================");
 
 ListFiles = getFiles(racine); # Liste de(s) fichier(s) situé(s) dans le dossier 
 ListFolders = getFolders(racine); # Liste(s) de(s) dossier(s) dans le dossier
-log = "Rapport.txt"; # Fichier log
-NumberFilesToMove = lengthFiles(ListFiles);
+NumberFilesToMove = lengthFilesToMove(ListFiles);
 
 print("NOMBRES DE FICHIERS");
 print(NumberFilesToMove);
