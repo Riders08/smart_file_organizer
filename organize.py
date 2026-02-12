@@ -40,10 +40,10 @@ print("======================================================");
 ListFiles = getFiles(racine); # Liste de(s) fichier(s) situé(s) dans le dossier 
 ListFolders = getFolders(racine); # Liste(s) de(s) dossier(s) dans le dossier
 log = "Rapport.txt"; # Fichier log
-
+NumberFilesToMove = lengthFiles(ListFiles);
 
 print("NOMBRES DE FICHIERS");
-print(lengthFiles(ListFiles));
+print(NumberFilesToMove);
 print("NOMBRES DE DOSSIERS (Hors dossiers de bases)");
 print(lengthFolders(ListFolders));
 print("======================================================");
@@ -67,8 +67,8 @@ if(dry_run):
     printMoveFileLogic(ListFiles);
 else:
     sort(racine, ListFiles, log);    
-    print("TRI EFFECTUÉ");
-    printSummary(racine);    
+    print("TRI EFFECTUÉ 👍");
+    printSummary(racine, NumberFilesToMove);    
 print("======================================================");
 if(verbose):
     print(f"PRÉCISION DES FICHIERS SITUÉS DANS {racine}");

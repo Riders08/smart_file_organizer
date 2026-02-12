@@ -94,16 +94,16 @@ def printDataFolderDefault(root):
     list_folders = getFolders(root);
     for folder in list_folders:
         if folder in list_folders_default or folder == "Others": 
-            print(f"{folder} => 📁: {lengthFiles(getFolders(Path(root)/folder))} dossier(s) présent(s), 📄: {lengthFiles(getFiles(Path(root)/folder))} fichier(s) présent(s)");
+            print(f"{ '❓' if folder == 'Others' else list_icon.get(folder)} {folder} => 📁: {lengthFiles(getFolders(Path(root)/folder))} dossier(s) présent(s), 📄: {lengthFiles(getFiles(Path(root)/folder))} fichier(s) présent(s)");
 
-def printSummary(root):
-    print("SUMMARY");
-    print(f"{lengthFiles(getFiles(root))} ont été déplacés:"); # MARCHE PAS ENCORE
+def printSummary(root, length):
+    print("===================RESUMER============================");
+    print(f" {length} ont été déplacé(s):"); # MARCHE PAS ENCORE
     list_folders_default = list(list_extension.keys());
     list_folders = getFolders(root);
     for folder in list_folders:
         if folder in list_folders_default or folder == "Others": 
-            print(f"{folder} => 📁: {lengthFiles(getFolders(Path(root)/folder))} dossier(s) présent(s), 📄: {lengthFiles(getFiles(Path(root)/folder))} fichier(s) présent(s)");
+            print(f"{ '❓' if folder == 'Others' else list_icon.get(folder)} {folder} => 📁: {lengthFiles(getFolders(Path(root)/folder))} dossier(s) présent(s), 📄: {lengthFiles(getFiles(Path(root)/folder))} fichier(s) présent(s)");
 # CHECKS
 
 # Detect si il y a un dossier

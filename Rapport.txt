@@ -324,3 +324,9 @@ LOG: Deplacement d'un fichier ❓ => Slurp.slurp située test/Slurp.slurp vers l
 2026-02-11 19:18:28
 LOG: Deplacement d'un fichier 📄 => Test.txt située test/Test.txt vers la destination test/Documents/Test.txt de part son type Documents via son extension .txt
 
+2026-02-12 18:29:56
+LOG: Deplacement d'un fichier 🎵 => Future Royalty - Take Whats Mine.mp3 située test/Future Royalty - Take Whats Mine.mp3 vers la destination test/Music/Future Royalty - Take Whats Mine.mp3 de part son type Music via son extension .mp3
+
+2026-02-12 18:29:56
+LOG: Deplacement d'un fichier ❓ => Slurp.slurp située test/Slurp.slurp vers la destination test/Others/Slurp.slurp de part son type Others via son extension .slurp
+
