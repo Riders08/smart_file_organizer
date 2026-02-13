@@ -36,6 +36,12 @@ parser.add_argument(
     help="Précise si l'on souhaite un rapport des déplacements ou non."
 );
 
+parser.add_argument(
+    "--ignore",
+    nargs="+",
+    help="Liste des types de fichier que vous ne souhaitez pas déplacer"
+);
+
 args = parser.parse_args();
 
 racine = args.path; #Chemin du dossier
@@ -49,12 +55,11 @@ else:
     log = Path(args.log);
     if log.suffix == "":
         log = log.with_suffix(".log"); 
-
+ignore = None if args.ignore == None else args.ignore; #Mode ignore
 
 # IL NOUS FAUT: 
 # un mode guidage
 # un mode recursif
-# un mode ignore
 
 if(args.without_log and args.log):
     print("❌ Impossible : vous ne pouvez pas demander à ne pas avoir de log et définir un fichier log en même temps !");
@@ -66,10 +71,11 @@ print(f"Dossier cible => {racine}");
 print(f"Mode Log => {'Désactivé' if without_log else log}");
 print(f"Mode Simulation => {'Activé'if dry_run else 'Désactivé'}");
 print(f"Mode Verbeux => {'Activé' if verbose else 'Désactivé'}");
+print(f"Mode Ignore => {'Désactivé' if ignore == None else 'Activé'}");
 print("======================================================");
 
-ListFiles = getFiles(racine); # Liste de(s) fichier(s) situé(s) dans le dossier 
-ListFolders = getFolders(racine); # Liste(s) de(s) dossier(s) dans le dossier
+ListFiles = getFiles(racine,ignore); # Liste de(s) fichier(s) situé(s) dans le dossier (Qui ne sont pas ignorer)
+ListFolders = getFolders(racine, ignore); # Liste(s) de(s) dossier(s) dans le dossier (Qui ne sont pas ignorer)
 NumberFilesToMove = lengthFilesToMove(ListFiles);
 
 print("NOMBRES DE FICHIERS");
@@ -89,7 +95,7 @@ print("ÉTAT DES DOSSIERS AVANT TRI");
 if not detectFoldersDefault(racine, ListFiles):
     print("PROBLÈME DE CRÉATION DE DOSSIERS DE TRI");
 else:
-    printDataFolderDefault(racine);
+    printDataFolderDefault(racine, ignore);
 print("======================================================");
 if not without_log:
     if(detectLog(log) == False):
@@ -99,7 +105,7 @@ if(dry_run):
 else:
     sort(racine, ListFiles, log);    
     print("TRI EFFECTUÉ 👍");
-    printSummary(racine, NumberFilesToMove);    
+    printSummary(racine, NumberFilesToMove, ignore);    
 print("======================================================");
 if(verbose):
     print(f"PRÉCISION DES FICHIERS SITUÉS DANS {racine}\n");
