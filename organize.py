@@ -30,23 +30,42 @@ parser.add_argument(
     help="Fichier log qui genère un historique de l'exécution du programme"
 );
 
+parser.add_argument(
+    "--without-log",
+    action="store_true",
+    help="Précise si l'on souhaite un rapport des déplacements ou non."
+);
+
 args = parser.parse_args();
 
 racine = args.path; #Chemin du dossier
+without_log = args.without_log; # Mode log
 dry_run = args.dry_run; #Mode simulation
 verbose = args.verbose; #Mode affichage
 # Fichier log
-log = Path(args.log);
-if log.suffix == "":
-    log = log.with_suffix(".log"); 
+if without_log :
+    log = None
+else:
+    log = Path(args.log);
+    if log.suffix == "":
+        log = log.with_suffix(".log"); 
 
 
+# IL NOUS FAUT: 
+# un mode guidage
+# un mode recursif
+# un mode ignore
+
+if(args.without_log and args.log):
+    print("❌ Impossible : vous ne pouvez pas demander à ne pas avoir de log et définir un fichier log en même temps !");
+    exit(1);
 
 print("======================================================");
 print("INITIALISATION...");
-print(f"Dossier cible {racine}");
-print(f"Mode Simulation {dry_run}");
-print(f"Mode Verbeux {verbose}");
+print(f"Dossier cible => {racine}");
+print(f"Mode Log => {'Désactivé' if without_log else log}");
+print(f"Mode Simulation => {'Activé'if dry_run else 'Désactivé'}");
+print(f"Mode Verbeux => {'Activé' if verbose else 'Désactivé'}");
 print("======================================================");
 
 ListFiles = getFiles(racine); # Liste de(s) fichier(s) situé(s) dans le dossier 
@@ -72,8 +91,9 @@ if not detectFoldersDefault(racine, ListFiles):
 else:
     printDataFolderDefault(racine);
 print("======================================================");
-if(detectLog(log) == False):
-    create_default_rapport(log);
+if not without_log:
+    if(detectLog(log) == False):
+        create_default_rapport(log);
 if(dry_run):
     printMoveFileLogic(ListFiles);
 else:
@@ -82,5 +102,5 @@ else:
     printSummary(racine, NumberFilesToMove);    
 print("======================================================");
 if(verbose):
-    print(f"PRÉCISION DES FICHIERS SITUÉS DANS {racine}");
+    print(f"PRÉCISION DES FICHIERS SITUÉS DANS {racine}\n");
     printAllExtensionFiles(racine, ListFiles);

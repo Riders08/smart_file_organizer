@@ -9,7 +9,7 @@ list_extension = {
 }
 
 list_icon = {
-    "Images" : "🖼️",
+    "Images" : "🖼️ ",
     "Documents" : "📄",
     "Video" : "🎬",
     "Music" : "🎵",

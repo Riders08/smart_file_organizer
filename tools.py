@@ -87,8 +87,10 @@ def printAllFolder(folders):
     for element in folders:
         print(element);
 def printAllExtensionFiles(root,files):
+    if len(files) <= 0:
+        print(f"AUCUN FICHIER SITUÉ DANS {root}")
     for file in files:
-        print(f"\nLe fichier {file}, \n    {getIcon(file)} => située : {getSource(root ,file)},\n        et qui a pour extension {getExtension(file)} doit aller dans le dossier : {getTypeFile(file)}");    
+        print(f"Le fichier {file}, \n    {getIcon(file)} => située : {getSource(root ,file)},\n        et qui a pour extension {getExtension(file)} doit aller dans le dossier : {getTypeFile(file)}");    
 def printMoveFileLogic(files):
     for file in files:
         print(f"[DRY-RUN] Le fichier nommé {file} irait dans {getTypeFile(file)}");
@@ -169,8 +171,7 @@ def sort(root, files, log):
     folders = list(list_extension.keys());
     if(detectFileOther(files)):
         folders.append("Others");
-    if(len(files) <= 0):
-        AnyMove(log);
+    cpt = 0;
     for file in files: 
         type_file = getTypeFile(file);
         source = getSource(root, file);
@@ -184,8 +185,13 @@ def sort(root, files, log):
                 new_name = f"{fileWithoutExtension(file)}{counter}{getExtension(file)}";
             destination = Path(root) / type_file / new_name;
             counter+=1;
+        cpt += 1;
         shutil.move(source, destination);
-        DetailsMove(root, file, destination, log);
+        if log:
+            DetailsMove(root, file, destination, log);
+    if log:
+        if(cpt == 0):
+            AnyMove(log);
 
 # LOGS
 # Si fichiers déplacé
