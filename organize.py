@@ -78,12 +78,13 @@ ListFiles = getFiles(racine,ignore); # Liste de(s) fichier(s) situé(s) dans le 
 ListFolders = getFolders(racine, ignore); # Liste(s) de(s) dossier(s) dans le dossier (Qui ne sont pas ignorer)
 NumberFilesToMove = lengthFilesToMove(ListFiles);
 
+
 print("NOMBRES DE FICHIERS");
 print(NumberFilesToMove);
-print("NOMBRES DE DOSSIERS (Hors dossiers de bases)");
+print("NOMBRES DE DOSSIERS (Hors dossiers de bases + dossiers ignorés)");
 print(lengthFolders(ListFolders));
 print("======================================================");
-if not detectFoldersDefault(racine, ListFiles):
+if not detectFoldersDefault(racine, ListFiles, ignore):
     if(dry_run):
         print("[DRY-RUN] Création de dossiers par défaut...")
     else:
@@ -92,7 +93,7 @@ if not detectFoldersDefault(racine, ListFiles):
 print("CONFIGURATION DES DOSSIERS OK");
 print("======================================================");
 print("ÉTAT DES DOSSIERS AVANT TRI");
-if not detectFoldersDefault(racine, ListFiles):
+if not detectFoldersDefault(racine, ListFiles, ignore):
     print("PROBLÈME DE CRÉATION DE DOSSIERS DE TRI");
 else:
     printDataFolderDefault(racine, ignore);
