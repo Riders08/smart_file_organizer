@@ -169,6 +169,8 @@ def sort(root, files, log):
     folders = list(list_extension.keys());
     if(detectFileOther(files)):
         folders.append("Others");
+    if(len(files) <= 0):
+        AnyMove(log);
     for file in files: 
         type_file = getTypeFile(file);
         source = getSource(root, file);
@@ -186,9 +188,17 @@ def sort(root, files, log):
         DetailsMove(root, file, destination, log);
 
 # LOGS
+# Si fichiers déplacé
 def DetailsMove(root, file, destination, log):
     source = getSource(root, file);
     with open(log, "a") as rapport:
         rapport.write(f"{getTime()}\n");
         rapport.write(f"LOG: Deplacement d'un fichier {getIcon(file)} => {file} située {source} vers la destination {destination} de part son type {getTypeFile(file)} via son extension {getExtension(file)}\n\n");
+    rapport.close();
+    
+# Sinon aucun fichiers déplacés
+def AnyMove(log):
+    with open(log, "a") as rapport:
+        rapport.write(f"{getTime()}\n");
+        rapport.write(f"AUCUN FICHIER DÉPLACÉ.\n\n");
     rapport.close();
