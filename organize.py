@@ -42,12 +42,18 @@ parser.add_argument(
     help="Liste des types de fichier que vous ne souhaitez pas déplacer"
 );
 
+parser.add_argument(
+    "--récursif",
+    action="store_true",
+    help="Mode récursif, consistant à appliquer le tri dans tous les dossiers du dossier cible donné"
+)
+
 args = parser.parse_args();
 
-racine = args.path; #Chemin du dossier
+racine = args.path; # Chemin du dossier
 without_log = args.without_log; # Mode log
-dry_run = args.dry_run; #Mode simulation
-verbose = args.verbose; #Mode affichage
+dry_run = args.dry_run; # Mode simulation
+verbose = args.verbose; # Mode affichage
 # Fichier log
 if without_log :
     log = None
@@ -55,11 +61,11 @@ else:
     log = Path(args.log);
     if log.suffix == "":
         log = log.with_suffix(".log"); 
-ignore = None if args.ignore == None else args.ignore; #Mode ignore
+ignore = None if args.ignore == None else args.ignore; # Mode ignore
+récursif = args.récursif; # Mode récursif
 
 # IL NOUS FAUT: 
 # un mode guidage
-# un mode recursif
 
 if(args.without_log and args.log):
     print("❌ Impossible : vous ne pouvez pas demander à ne pas avoir de log et définir un fichier log en même temps !");
@@ -72,6 +78,7 @@ print(f"Mode Log => {'Désactivé' if without_log else log}");
 print(f"Mode Simulation => {'Activé'if dry_run else 'Désactivé'}");
 print(f"Mode Verbeux => {'Activé' if verbose else 'Désactivé'}");
 print(f"Mode Ignore => {'Désactivé' if ignore == None else 'Activé'}");
+print(f"Mode Récursif => {'Activé' if récursif else 'Désactivé'}");
 print("======================================================");
 
 ListFiles = getFiles(racine,ignore); # Liste de(s) fichier(s) situé(s) dans le dossier (Qui ne sont pas ignorer)
