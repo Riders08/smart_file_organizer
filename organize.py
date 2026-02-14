@@ -81,15 +81,15 @@ print(f"Mode Ignore => {'Désactivé' if ignore == None else 'Activé'}");
 print(f"Mode Récursif => {'Activé' if récursif else 'Désactivé'}");
 print("======================================================");
 
-#ListFolders = getFolders(racine, ignore, récursif); # Liste(s) de(s) dossier(s) dans le dossier racine ainsi que les sous-dossiers compris (Qui ne sont pas ignorer)
+ListFolders = getFolders(racine, ignore, récursif); # Liste(s) de(s) dossier(s) dans le dossier racine ainsi que les sous-dossiers compris (Qui ne sont pas ignorer)
 ListFiles = getFiles(racine, ignore, récursif); # Liste de(s) fichier(s) situé(s) dans le dossier racine ainsi que les sous-dossiers compris (Qui ne sont pas ignorer)
-NumberFilesToMove = lengthFilesToMove(ListFiles);
+NumberFilesToMove = lengthFiles(ListFiles);
 
 
 print("NOMBRES DE FICHIERS");
 print(NumberFilesToMove);
 print("NOMBRES DE DOSSIERS (Hors dossiers de bases + dossiers ignorés)");
-#print(lengthFolders(ListFolders));
+print(lengthFolders(ListFolders));
 
 
 """print("======================================================");

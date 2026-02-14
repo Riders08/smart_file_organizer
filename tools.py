@@ -40,19 +40,12 @@ def getFolders(root, ignore, récursif):
     for element in os.listdir(root):
         chemin = Path(root) / element;
         if(os.path.isdir(chemin)):
-            if(ignore == None):
-                Folders.append(chemin);
-                if(récursif):
-                   folders = getFolders(chemin, ignore, récursif);
-                   for folder in folders:
-                       Folders.append(folder); 
-            else:
-                if(("./" + element) not in ignore):
-                    Folders.append(element);
+            list_folders_require = list(list_extension.keys());
+            if(element != "Others" and element not in list_folders_require):
+                if(ignore == None or ("./" + element) not in ignore):
+                    Folders.append(chemin);
                     if(récursif):
-                        folders = getFolders(chemin, ignore, récursif);
-                        for folder in folders:
-                            Folders.append(folder); 
+                       Folders.extend(getFolders(chemin, ignore, récursif));  
     return Folders;
 
 # renvoie l'extension du fichier
@@ -80,13 +73,10 @@ def getTypeFile(file):
 def getTime():
     return datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S");
 
-#OTHERS
+#LONGUEURS
 
 # Renvoie le nombre de fichiers
 def lengthFiles(files):
-    return len(files);
-
-def lengthFilesToMove(files):
     return len(files);
 
 # Renvoie le nombre de dossiers
