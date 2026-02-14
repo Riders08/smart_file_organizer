@@ -17,26 +17,42 @@ def fileWithoutExtension(file):
     return file.replace(getExtension(file),"");
 
 # Génére une liste de tous les fichiers
-def getFiles(root, ignore):
+def getFiles(root, ignore, récursif):
     Files = [];
     for element in os.listdir(root):
         chemin = Path(root) / element;
         if(os.path.isfile(chemin)):
             if(ignore is None or getExtension(element) not in ignore):
-                Files.append(element);
+                Files.append(chemin);          
+    if récursif: 
+        for element in os.listdir(root):
+            chemin = Path(root) / element;
+            if(os.path.isdir(chemin)):  
+                list_folders_require = list(list_extension.keys());
+                if(element != "Others" and element not in list_folders_require):
+                    if(ignore is None or ("./" + element) not in ignore):
+                        Files.extend(getFiles(chemin, ignore, récursif));          
     return Files;
 
 # Génére une liste de tous les dossiers
-def getFolders(root, ignore):
+def getFolders(root, ignore, récursif):
     Folders = [];
     for element in os.listdir(root):
         chemin = Path(root) / element;
         if(os.path.isdir(chemin)):
             if(ignore == None):
-                Folders.append(element);
+                Folders.append(chemin);
+                if(récursif):
+                   folders = getFolders(chemin, ignore, récursif);
+                   for folder in folders:
+                       Folders.append(folder); 
             else:
                 if(("./" + element) not in ignore):
                     Folders.append(element);
+                    if(récursif):
+                        folders = getFolders(chemin, ignore, récursif);
+                        for folder in folders:
+                            Folders.append(folder); 
     return Folders;
 
 # renvoie l'extension du fichier

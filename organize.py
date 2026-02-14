@@ -81,16 +81,18 @@ print(f"Mode Ignore => {'Désactivé' if ignore == None else 'Activé'}");
 print(f"Mode Récursif => {'Activé' if récursif else 'Désactivé'}");
 print("======================================================");
 
-ListFiles = getFiles(racine,ignore); # Liste de(s) fichier(s) situé(s) dans le dossier (Qui ne sont pas ignorer)
-ListFolders = getFolders(racine, ignore); # Liste(s) de(s) dossier(s) dans le dossier (Qui ne sont pas ignorer)
+#ListFolders = getFolders(racine, ignore, récursif); # Liste(s) de(s) dossier(s) dans le dossier racine ainsi que les sous-dossiers compris (Qui ne sont pas ignorer)
+ListFiles = getFiles(racine, ignore, récursif); # Liste de(s) fichier(s) situé(s) dans le dossier racine ainsi que les sous-dossiers compris (Qui ne sont pas ignorer)
 NumberFilesToMove = lengthFilesToMove(ListFiles);
 
 
 print("NOMBRES DE FICHIERS");
 print(NumberFilesToMove);
 print("NOMBRES DE DOSSIERS (Hors dossiers de bases + dossiers ignorés)");
-print(lengthFolders(ListFolders));
-print("======================================================");
+#print(lengthFolders(ListFolders));
+
+
+"""print("======================================================");
 if not detectFoldersDefault(racine, ListFiles, ignore):
     if(dry_run):
         print("[DRY-RUN] Création de dossiers par défaut...")
@@ -117,4 +119,4 @@ else:
 print("======================================================");
 if(verbose):
     print(f"PRÉCISION DES FICHIERS SITUÉS DANS {racine}\n");
-    printAllExtensionFiles(racine, ListFiles);
+    printAllExtensionFiles(racine, ListFiles);"""
