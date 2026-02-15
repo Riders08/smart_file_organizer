@@ -93,22 +93,21 @@ print(lengthFolders(ListFolders));
 
 # Reprendre ici le cas Récursif
 print("======================================================");
-if not detectFoldersDefault(racine, ListFiles, ignore, récursif):
+if not detectFoldersDefault(racine, ListFiles, ignore):
     if(dry_run):
         print("[DRY-RUN] Création de dossiers par défaut...")
     else:
         print("CONFIGURATION DES DOSSIERS EN COURS...");
         create_default_folder(racine, ListFiles);
 print("CONFIGURATION DES DOSSIERS OK");
-"""
 print("======================================================");
 print("ÉTAT DES DOSSIERS AVANT TRI");
 if not detectFoldersDefault(racine, ListFiles, ignore):
     print("PROBLÈME DE CRÉATION DE DOSSIERS DE TRI");
 else:
-    printDataFolderDefault(racine, ignore);
+    printDataFolderDefault(racine, ignore, récursif);
 print("======================================================");
-if not without_log:
+"""if not without_log:
     if(detectLog(log) == False):
         create_default_rapport(log);
 if(dry_run):

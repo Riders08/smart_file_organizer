@@ -48,6 +48,15 @@ def getFolders(root, ignore, récursif):
                        Folders.extend(getFolders(chemin, ignore, récursif));  
     return Folders;
 
+# Renvoie les dossiers par défaut actuellement présent à la racine
+def getFoldersDéfault(root):
+    ListFolderDefault = [];
+    for element in os.listdir(root):
+        chemin = Path(root) / element;
+        if(os.path.isdir(chemin) and (element in list_extension or element == "Others")):
+            ListFolderDefault.append(element);
+    return ListFolderDefault;
+
 # renvoie l'extension du fichier
 def getExtension(file):
     return Path(file).suffix;
@@ -105,12 +114,12 @@ def printAllExtensionFiles(root,files):
 def printMoveFileLogic(files):
     for file in files:
         print(f"[DRY-RUN] Le fichier nommé {file} irait dans {getTypeFile(file)}");
-def printDataFolderDefault(root, ignore):
+def printDataFolderDefault(root, ignore, récursif):
     list_folders_default = list(list_extension.keys());
-    list_folders = getFolders(root, ignore);
+    list_folders = getFoldersDéfault(root);
     for folder in list_folders:
         if folder in list_folders_default or folder == "Others": 
-            print(f"{ '❓' if folder == 'Others' else list_icon.get(folder)} {folder} => 📁: {lengthFiles(getFolders(Path(root)/folder, ignore))} dossier(s) présent(s), 📄: {lengthFiles(getFiles(Path(root)/folder, ignore))} fichier(s) présent(s)");
+            print(f"{ '❓' if folder == 'Others' else list_icon.get(folder)} {folder} => 📄: {lengthFiles(getFiles(Path(root)/folder, ignore, récursif))} fichier(s) présent(s)");
 
 def printSummary(root, length, ignore):
     print("===================RESUMER============================");
@@ -131,9 +140,20 @@ def detectFolder(root):
     return False;
 
 # Verifie si on a les dossiers par défault
-def detectFoldersDefault(root, files, ignore, récursif):
-    list_folders = getFolders(root, ignore, récursif);
-    require_folders = list(list_extension.keys());
+def detectFoldersDefault(root, files, ignore):
+    list_folders = [];
+    for element in os.listdir(root):
+        chemin = Path(root) / element;
+        if(os.path.isdir(chemin)):
+            list_folders.append(element);
+    list_extension_necessary = [];
+    for file in files:
+        list_extension_necessary.append(getExtension(file));
+    require_folders = [];
+    for element in list_extension:
+        for extension in list_extension_necessary:
+            if extension in list_extension[element]:
+                require_folders.append(element);
     if(detectFileOther(files)):
         require_folders.append("Others");
     for f in require_folders:
@@ -159,7 +179,6 @@ def create_default_folder(root, files):
     ListExtensionNecessary = [];
     for file in files:
         ListExtensionNecessary.append(getExtension(file));
-    print(ListExtensionNecessary);
     for element in list_extension:
         for extension in ListExtensionNecessary:
             if extension in list_extension[element]:
