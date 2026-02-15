@@ -218,9 +218,9 @@ def sort(root, files, log):
         counter = 1;
         while(destination.exists()):
             if(counter == 1):
-                new_name = f"{fileWithoutExtension(file)}{getExtension(file)}";
+                new_name = f"{fileWithoutExtension(f)}{getExtension(file)}";
             else:
-                new_name = f"{fileWithoutExtension(file)}{counter}{getExtension(file)}";
+                new_name = f"{fileWithoutExtension(f)}{counter}{getExtension(file)}";
             destination = Path(root) / type_file / new_name;
             counter+=1;
         cpt += 1;
