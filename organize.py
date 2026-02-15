@@ -107,7 +107,7 @@ if not detectFoldersDefault(racine, ListFiles, ignore):
 else:
     printDataFolderDefault(racine, ignore, récursif);
 print("======================================================");
-"""if not without_log:
+if not without_log:
     if(detectLog(log) == False):
         create_default_rapport(log);
 if(dry_run):
@@ -115,8 +115,8 @@ if(dry_run):
 else:
     sort(racine, ListFiles, log);    
     print("TRI EFFECTUÉ 👍");
-    printSummary(racine, NumberFilesToMove, ignore);    
+    #printSummary(racine, NumberFilesToMove, ignore);    
 print("======================================================");
 if(verbose):
     print(f"PRÉCISION DES FICHIERS SITUÉS DANS {racine}\n");
-    printAllExtensionFiles(racine, ListFiles);"""
+    printAllExtensionFiles(racine, ListFiles);

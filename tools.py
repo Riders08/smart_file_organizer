@@ -8,10 +8,6 @@ from pathlib import Path
 
 # GETTERS/SETTERS
 
-# Génére le chemin du fichier
-def getSource(root, file):
-    return Path(root) / file;
-
 
 def fileWithoutExtension(file):
     return file.replace(getExtension(file),"");
@@ -110,7 +106,7 @@ def printAllExtensionFiles(root,files):
     if len(files) <= 0:
         print(f"AUCUN FICHIER SITUÉ DANS {root}")
     for file in files:
-        print(f"Le fichier {file}, \n    {getIcon(file)} => située : {getSource(root ,file)},\n        et qui a pour extension {getExtension(file)} doit aller dans le dossier : {getTypeFile(file)}");    
+        print(f"Le fichier {file}, \n    {getIcon(file)} => située : {file},\n        et qui a pour extension {getExtension(file)} doit aller dans le dossier : {getTypeFile(file)}");    
 def printMoveFileLogic(files):
     for file in files:
         print(f"[DRY-RUN] Le fichier nommé {file} irait dans {getTypeFile(file)}");
@@ -210,10 +206,12 @@ def sort(root, files, log):
         folders.append("Others");
     cpt = 0;
     for file in files: 
+        chemin = Path(file);
+        f = chemin.name;
         type_file = getTypeFile(file);
-        source = getSource(root, file);
+        source = file;
         folder_to_push = Path(root) / type_file;
-        destination = folder_to_push / file;
+        destination = folder_to_push / f;
         counter = 1;
         while(destination.exists()):
             if(counter == 1):
@@ -225,18 +223,20 @@ def sort(root, files, log):
         cpt += 1;
         shutil.move(source, destination);
         if log:
-            DetailsMove(root, file, destination, log);
+            folder_destination = Path(destination);
+            DetailsMove(file, folder_destination.parent, log);
     if log:
         if(cpt == 0):
             AnyMove(log);
 
 # LOGS
 # Si fichiers déplacé
-def DetailsMove(root, file, destination, log):
-    source = getSource(root, file);
+def DetailsMove(file, destination, log):
+    source = Path(file).parent;
+    filename = Path(file).name;
     with open(log, "a") as rapport:
         rapport.write(f"{getTime()}\n");
-        rapport.write(f"LOG: Deplacement d'un fichier {getIcon(file)} => {file} située {source} vers la destination {destination} de part son type {getTypeFile(file)} via son extension {getExtension(file)}\n\n");
+        rapport.write(f"LOG: Deplacement du fichier {getIcon(file)} => {filename} située dans ./{source} vers la destination ./{destination} de part son type {getTypeFile(file)} via son extension {getExtension(file)}\n\n");
     rapport.close();
     
 # Sinon aucun fichiers déplacés
