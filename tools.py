@@ -104,9 +104,11 @@ def printAllFolder(folders):
         print(element);
 def printAllExtensionFiles(root,files):
     if len(files) <= 0:
-        print(f"AUCUN FICHIER SITUÉ DANS {root}")
+        print(f"AUCUN FICHIER SITUÉ DANS {root} NI DANS AUCUN SOUS-DOSSIER");
     for file in files:
-        print(f"Le fichier {file}, \n    {getIcon(file)} => située : {file},\n        et qui a pour extension {getExtension(file)} doit aller dans le dossier : {getTypeFile(file)}");    
+        filename = Path(file).name;
+        parent = Path(file).parent;
+        print(f"Le fichier {filename}, \n    {getIcon(file)} => située : ./{parent},\n        et qui a pour extension {getExtension(file)} doit aller dans le dossier : {root}/{getTypeFile(file)}");    
 def printMoveFileLogic(files):
     for file in files:
         print(f"[DRY-RUN] Le fichier nommé {file} irait dans {getTypeFile(file)}");
