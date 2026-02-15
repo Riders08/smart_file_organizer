@@ -111,7 +111,8 @@ def printAllExtensionFiles(root,files):
         print(f"Le fichier {filename}, \n    {getIcon(file)} => située : ./{parent},\n        et qui a pour extension {getExtension(file)} doit aller dans le dossier : {root}/{getTypeFile(file)}");    
 def printMoveFileLogic(files):
     for file in files:
-        print(f"[DRY-RUN] Le fichier nommé {file} irait dans {getTypeFile(file)}");
+        filename = Path(file).name
+        print(f"[DRY-RUN] Le fichier nommé {filename} irait dans {getTypeFile(file)}");
 def printDataFolderDefault(root, ignore, récursif):
     list_folders_default = list(list_extension.keys());
     list_folders = getFoldersDéfault(root);
@@ -119,16 +120,16 @@ def printDataFolderDefault(root, ignore, récursif):
         if folder in list_folders_default or folder == "Others": 
             print(f"{ '❓' if folder == 'Others' else list_icon.get(folder)} {folder} => 📄: {lengthFiles(getFiles(Path(root)/folder, ignore, récursif))} fichier(s) présent(s)");
 
-def printSummary(root, length, ignore):
+def printSummary(root, length, ignore, récursif):
     print("===================RESUMER============================");
-    print(f" {length} ont été déplacé(s):"); # MARCHE PAS ENCORE
+    print(f" {length} ont été déplacé(s):"); 
     list_folders_default = list(list_extension.keys());
-    list_folders = getFolders(root, ignore);
+    list_folders = getFoldersDéfault(root);
     for folder in list_folders:
         if folder in list_folders_default or folder == "Others": 
-            print(f"{ '❓' if folder == 'Others' else list_icon.get(folder)} {folder} => 📁: {lengthFiles(getFolders(Path(root)/folder, ignore))} dossier(s) présent(s), 📄: {lengthFiles(getFiles(Path(root)/folder, ignore))} fichier(s) présent(s)");
-# CHECKS
+            print(f"{ '❓' if folder == 'Others' else list_icon.get(folder)} {folder} => 📄: {lengthFiles(getFiles(Path(root)/folder, ignore, récursif))} fichier(s) présent(s)");
 
+# CHECKS
 # Detect si il y a un dossier
 def detectFolder(root):
     for element in os.listdir(root):

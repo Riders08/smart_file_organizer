@@ -65,7 +65,7 @@ ignore = None if args.ignore == None else args.ignore; # Mode ignore
 récursif = args.récursif; # Mode récursif
 
 # IL NOUS FAUT: 
-# un mode guidage
+# un mode guidage/intéractif (proposer différent cas à l'utilisateur)
 
 if(args.without_log and args.log):
     print("❌ Impossible : vous ne pouvez pas demander à ne pas avoir de log et définir un fichier log en même temps !");
@@ -91,7 +91,6 @@ print(NumberFilesToMove);
 print("NOMBRES DE DOSSIERS (Hors dossiers de bases + dossiers ignorés)");
 print(lengthFolders(ListFolders));
 
-# Reprendre ici le cas Récursif
 print("======================================================");
 if not detectFoldersDefault(racine, ListFiles, ignore):
     if(dry_run):
@@ -115,7 +114,7 @@ if(dry_run):
 else:
     sort(racine, ListFiles, log);    
     print("TRI EFFECTUÉ 👍");
-    #printSummary(racine, NumberFilesToMove, ignore);    
+    printSummary(racine, NumberFilesToMove, ignore, récursif);    
 print("======================================================");
 if(verbose):
     print(f"PRÉCISION DES FICHIERS SITUÉS DANS {racine}\n");
