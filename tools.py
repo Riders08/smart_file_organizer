@@ -50,7 +50,7 @@ def getFolders(root, ignore, récursif):
 
 # renvoie l'extension du fichier
 def getExtension(file):
-    return Path(file.casefold()).suffix;
+    return Path(file).suffix;
 
 #renvoie l'icone qui illustre le type du fichier
 def getIcon(file):
@@ -131,8 +131,8 @@ def detectFolder(root):
     return False;
 
 # Verifie si on a les dossiers par défault
-def detectFoldersDefault(root, files, ignore):
-    list_folders = getFolders(root, ignore);
+def detectFoldersDefault(root, files, ignore, récursif):
+    list_folders = getFolders(root, ignore, récursif);
     require_folders = list(list_extension.keys());
     if(detectFileOther(files)):
         require_folders.append("Others");
@@ -156,11 +156,18 @@ def detectLog(log):
 
 # Initialisation des dossiers
 def create_default_folder(root, files):
+    ListExtensionNecessary = [];
+    for file in files:
+        ListExtensionNecessary.append(getExtension(file));
+    print(ListExtensionNecessary);
     for element in list_extension:
-        if(os.path.exists(Path(root) / element)):
-            continue;
-        else:
-            os.mkdir(Path(root) / element);
+        for extension in ListExtensionNecessary:
+            if extension in list_extension[element]:
+                chemin = Path(element);
+                if(os.path.exists(Path(root) / element)):
+                    continue;
+                else:
+                    os.mkdir(Path(root) / chemin.name);
     if(detectFileOther(files)):
         create_default_folder_other(root);
 

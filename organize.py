@@ -91,15 +91,16 @@ print(NumberFilesToMove);
 print("NOMBRES DE DOSSIERS (Hors dossiers de bases + dossiers ignorés)");
 print(lengthFolders(ListFolders));
 
-
-"""print("======================================================");
-if not detectFoldersDefault(racine, ListFiles, ignore):
+# Reprendre ici le cas Récursif
+print("======================================================");
+if not detectFoldersDefault(racine, ListFiles, ignore, récursif):
     if(dry_run):
         print("[DRY-RUN] Création de dossiers par défaut...")
     else:
         print("CONFIGURATION DES DOSSIERS EN COURS...");
         create_default_folder(racine, ListFiles);
 print("CONFIGURATION DES DOSSIERS OK");
+"""
 print("======================================================");
 print("ÉTAT DES DOSSIERS AVANT TRI");
 if not detectFoldersDefault(racine, ListFiles, ignore):
