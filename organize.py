@@ -116,7 +116,7 @@ if(guide):
     print(f"Avant d'effectuer le tri du dossier {racine}, ");
     while ok is not True:
         reponse = input("Souhaitez-vous créer un dossier spécifique ? \n(Yes/No)\n").strip().lower();
-        if reponse in ["o", "oui", "y", "yes"]:
+        if reponse in ["o", "oui", "y", "yes", "ye", "ou"]:
             ok = True;
             name_ok = False;
             while name_ok is not True:
@@ -132,7 +132,7 @@ if(guide):
                         finish_ok = False;
                         while finish_ok is not True:
                             finish = input("Souhaitez-vous créer un autre dossier spécifique ? \n(Yes/No)\n").strip().lower();
-                            if finish in ["o", "oui", "y", "yes"]:
+                            if finish in ["o", "oui", "ou", "y", "yes", "ye"]:
                                 name_ok = False;
                                 finish_ok = True;
                             elif finish in ["n", "no", "non", ""]:

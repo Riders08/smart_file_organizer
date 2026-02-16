@@ -234,7 +234,14 @@ def sort(root, files, folders, log, guide):
         source = file; # La source du fichier de base
         folder_to_push = ""; # Le dossier qui acceuillera le fichier
         if guide: 
-            folder_to_push = Path(root) / sort_guide(folders ,filename);
+            choix = sort_guide(folders ,filename);
+            if(choix is not type_file and (choix in list_extension or choix == "Others")):
+                if(IsSure(filename, type_file, choix)):
+                    folder_to_push = Path(root) / choix;
+                else:
+                    folder_to_push = Path(root) / type_file;
+            else:
+                folder_to_push = Path(root) / choix;
         else:
             folder_to_push = Path(root) / type_file;
         destination = folder_to_push / filename; # Le chemin du dossier qui aura le fichier
@@ -287,3 +294,20 @@ def sort_guide(folders, filename):
         print("Choix invalide, recommencez.");
     folder_selected = folders[reponse - 1];
     return folder_selected;
+
+def IsSure(filename, type_file, choix):
+    print(f"Attention le fichier {filename} est de type {type_file}.");
+    print(f"Néanmoins, vous souhaitez le déplacer dans le dossier {choix}.");
+    ok = False;
+    while ok is not True:
+        question = input("Êtes-vous sûr de ce choix ?\n(Yes/No)\n");
+        if question in ["o", "oui", "y", "yes", "", "ou", "ye"]:
+            ok = True;
+            return True;
+        elif question in ["n", "no", "non"]:
+            ok = True;
+            print(f"Très bien, dans ce cas votre fichier va être déplacé dans le dossier recommandé {type_file}");
+            return False;
+        else:
+            ok = False;
+            print("Vous n'avez pas répondu à la question, veuillez repondre par oui ou non."); 
