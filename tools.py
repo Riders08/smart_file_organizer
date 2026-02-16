@@ -113,13 +113,15 @@ def printMoveFileLogic(files):
     for file in files:
         filename = Path(file).name
         print(f"[DRY-RUN] Le fichier nommé {filename} irait dans {getTypeFile(file)}");
-def printDataFolderDefault(root, ignore, récursif):
+def printDataFolderDefault(root, folders, ignore, récursif):
     list_folders_default = list(list_extension.keys());
-    list_folders = getFoldersDéfault(root);
+    list_folders = folders;
     for folder in list_folders:
         if folder in list_folders_default or folder == "Others": 
             print(f"{ '❓' if folder == 'Others' else list_icon.get(folder)} {folder} => 📄: {lengthFiles(getFiles(Path(root)/folder, ignore, récursif))} fichier(s) présent(s)");
-
+        else:
+            print(f"📁 {folder} => 📄: {lengthFiles(getFiles(Path(root)/folder, ignore, récursif))} fichier(s) présent(s)");
+            
 def printSummary(root, length, ignore, récursif):
     print("===================RESUMER============================");
     print(f" {length} ont été déplacé(s):"); 
@@ -221,24 +223,30 @@ def create_default_rapport(log):
 # TRI
 
 # Fonction qui tri les fichier du dossiers choisi dans les dossiers correspondant à leur nature
-def sort(root, files, log):
-    folders = list(list_extension.keys());
+def sort(root, files, folders, log, guide):
     if(detectFileOther(files)):
         folders.append("Others");
+    print(folders);
     cpt = 0;
     for file in files: 
-        chemin = Path(file);
-        f = chemin.name;
-        type_file = getTypeFile(file);
-        source = file;
-        folder_to_push = Path(root) / type_file;
-        destination = folder_to_push / f;
+        chemin = Path(file); # Chemin du fichier depuis la racine
+        filename = chemin.name; # Le nom du fichier avec extension
+        type_file = getTypeFile(file); # Le type de fichier
+        source = file; # La source du fichier de base
+        folder_to_push; # Le dossier qui acceuillera le fichier
+        destination; # Le chemin du dossier qui aura le fichier
+        if guide: 
+            question = input(f"Où doit  allez le fichier {filename} ?");
+            print(question);
+        else:
+            folder_to_push = Path(root) / type_file;
+            destination = folder_to_push / filename;
         counter = 1;
         while(destination.exists()):
             if(counter == 1):
-                new_name = f"{fileWithoutExtension(f)}{getExtension(file)}";
+                new_name = f"{fileWithoutExtension(filename)}{getExtension(file)}";
             else:
-                new_name = f"{fileWithoutExtension(f)}{counter}{getExtension(file)}";
+                new_name = f"{fileWithoutExtension(filename)}{counter}{getExtension(file)}";
             destination = Path(root) / type_file / new_name;
             counter+=1;
         cpt += 1;

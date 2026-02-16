@@ -91,10 +91,10 @@ print(f"Mode Récursif => {'Activé' if récursif else 'Désactivé'}");
 print(f"Mode Intéractif => {'Activé' if guide else 'Désactivé'}");
 print("======================================================");
 
-ListFolders = getFolders(racine, ignore, récursif); # Liste(s) de(s) dossier(s) dans le dossier racine ainsi que les sous-dossiers compris (Qui ne sont pas ignorer)
+ListFolders = getFolders(racine, ignore, récursif); # Liste de(s) dossier(s) dans le dossier racine ainsi que les sous-dossiers compris (Qui ne sont pas ignorer)
 ListFiles = getFiles(racine, ignore, récursif); # Liste de(s) fichier(s) situé(s) dans le dossier racine ainsi que les sous-dossiers compris (Qui ne sont pas ignorer)
 NumberFilesToMove = lengthFiles(ListFiles);
-
+ListFoldersDéfault = getFoldersDéfault(racine);# Liste de(s) dossiers par défault nécessaires au tri du dossier donné
 
 print("NOMBRES DE FICHIERS");
 print(NumberFilesToMove);
@@ -109,12 +109,6 @@ if not detectFoldersDefault(racine, ListFiles, ignore):
         print("CONFIGURATION DES DOSSIERS EN COURS...");
         create_default_folder(racine, ListFiles);
 print("CONFIGURATION DES DOSSIERS OK");
-print("======================================================");
-print("ÉTAT DES DOSSIERS AVANT TRI");
-if not detectFoldersDefault(racine, ListFiles, ignore):
-    print("PROBLÈME DE CRÉATION DE DOSSIERS DE TRI");
-else:
-    printDataFolderDefault(racine, ignore, récursif);
 print("======================================================");
 if(guide):
     print("BIENVENUE DANS LE MODE INTERACTIF");
@@ -134,6 +128,7 @@ if(guide):
                         print("Un dossier du même nom existe déjà, veuillez choisir un autre nom.");
                     else: 
                         create_folder_user(racine, reponse_name_folder);
+                        ListFoldersDéfault.append(reponse_name_folder);
                         finish_ok = False;
                         while finish_ok is not True:
                             finish = input("Souhaitez-vous créer un autre dossier spécifique ? \n(Yes/No)\n").strip().lower();
@@ -146,20 +141,25 @@ if(guide):
                             else:
                                 print("Vous n'avez pas répondu à la question, veuillez repondre par oui ou non."); 
         elif reponse in ["n", "no", "non", ""]:
-            print("Ne veut pas de dossier spécifique");
             ok = True;
         else:
             print("Vous n'avez pas répondu à la question, veuillez repondre par oui ou non."); 
     print("======================================================");
-"""if not without_log:
+print("ÉTAT DES DOSSIERS AVANT TRI");
+if not detectFoldersDefault(racine, ListFiles, ignore):
+    print("PROBLÈME DE CRÉATION DE DOSSIERS DE TRI");
+else:
+    printDataFolderDefault(racine, ListFoldersDéfault, ignore, récursif);
+print("======================================================");
+if not without_log:
     if(detectLog(log) == False):
         create_default_rapport(log);
 if(dry_run):
     printMoveFileLogic(ListFiles);
 else:
-    sort(racine, ListFiles, log);    
+    sort(racine, ListFiles, ListFoldersDéfault, log, guide);    
     print("TRI EFFECTUÉ 👍");
-    printSummary(racine, NumberFilesToMove, ignore, récursif);    
+"""    printSummary(racine, NumberFilesToMove, ignore, récursif);    
 print("======================================================");
 if(verbose):
     print(f"PRÉCISION DES FICHIERS SITUÉS DANS {racine}\n");
