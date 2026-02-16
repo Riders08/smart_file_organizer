@@ -116,7 +116,42 @@ if not detectFoldersDefault(racine, ListFiles, ignore):
 else:
     printDataFolderDefault(racine, ignore, récursif);
 print("======================================================");
-if not without_log:
+if(guide):
+    print("BIENVENUE DANS LE MODE INTERACTIF");
+    ok = False
+    print(f"Avant d'effectuer le tri du dossier {racine}, ");
+    while ok is not True:
+        reponse = input("Souhaitez-vous créer un dossier spécifique ? \n(Yes/No)\n").strip().lower();
+        if reponse in ["o", "oui", "y", "yes"]:
+            ok = True;
+            name_ok = False;
+            while name_ok is not True:
+                reponse_name_folder = input("Veuillez entrez un nom qui sera celui de votre dossier: ");
+                if reponse_name_folder == "":
+                    print("Vous n'avez pas donnez de nom à votre dossier spécifique.");
+                else:
+                    if(folderAlreadyExist(racine,reponse_name_folder)):
+                        print("Un dossier du même nom existe déjà, veuillez choisir un autre nom.");
+                    else: 
+                        create_folder_user(racine, reponse_name_folder);
+                        finish_ok = False;
+                        while finish_ok is not True:
+                            finish = input("Souhaitez-vous créer un autre dossier spécifique ? \n(Yes/No)\n").strip().lower();
+                            if finish in ["o", "oui", "y", "yes"]:
+                                name_ok = False;
+                                finish_ok = True;
+                            elif finish in ["n", "no", "non", ""]:
+                                name_ok = True;
+                                finish_ok = True;
+                            else:
+                                print("Vous n'avez pas répondu à la question, veuillez repondre par oui ou non."); 
+        elif reponse in ["n", "no", "non", ""]:
+            print("Ne veut pas de dossier spécifique");
+            ok = True;
+        else:
+            print("Vous n'avez pas répondu à la question, veuillez repondre par oui ou non."); 
+    print("======================================================");
+"""if not without_log:
     if(detectLog(log) == False):
         create_default_rapport(log);
 if(dry_run):
@@ -128,4 +163,4 @@ else:
 print("======================================================");
 if(verbose):
     print(f"PRÉCISION DES FICHIERS SITUÉS DANS {racine}\n");
-    printAllExtensionFiles(racine, ListFiles);
+    printAllExtensionFiles(racine, ListFiles);"""

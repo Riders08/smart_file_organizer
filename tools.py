@@ -130,6 +130,15 @@ def printSummary(root, length, ignore, récursif):
             print(f"{ '❓' if folder == 'Others' else list_icon.get(folder)} {folder} => 📄: {lengthFiles(getFiles(Path(root)/folder, ignore, récursif))} fichier(s) présent(s)");
 
 # CHECKS
+# Vérifie si il y a un dossier qui existe déjà à la racine avec ce nom
+def folderAlreadyExist(root, filename):
+    for element in os.listdir(root):
+        chemin = Path(root) / element;
+        if(os.path.isdir(chemin)):
+            if element == filename:
+                return True;
+    return False;
+
 # Detect si il y a un dossier
 def detectFolder(root):
     for element in os.listdir(root):
@@ -172,6 +181,15 @@ def detectLog(log):
     return os.path.exists(log);
 
 # INITIALISATION DES DOSSIERS
+
+# Création d'un dossier spécifique souhaitez par l'utilisateur
+def create_folder_user(root,filename):
+        chemin =Path(root)/filename;
+        if(os.path.isdir(chemin)):
+            print(f"ERREUR : UN DOSSIER DU MÊME NOM EXISTE DÉJÀ ET A ÉTÉ TROUVÉ : ./{chemin}");
+        else:
+            os.mkdir(Path(root)/ filename);
+            print(f"CRÉATION DU DOSSIER {filename} EFFECTUÉE AVEC SUCCÈS")
 
 # Initialisation des dossiers
 def create_default_folder(root, files):
