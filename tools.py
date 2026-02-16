@@ -108,7 +108,7 @@ def printAllExtensionFiles(root,files):
     for file in files:
         filename = Path(file).name;
         parent = Path(file).parent;
-        print(f"Le fichier {filename}, \n    {getIcon(file)} => située : ./{parent},\n        et qui a pour extension {getExtension(file)} doit aller dans le dossier : {root}/{getTypeFile(file)}");    
+        print(f"Le fichier {filename}, \n    {getIcon(file)} => située : ./{parent},\n        à été déplacée dans le dossier : {root}/");    
 def printMoveFileLogic(files):
     for file in files:
         filename = Path(file).name
@@ -122,15 +122,17 @@ def printDataFolderDefault(root, folders, ignore, récursif):
         else:
             print(f"📁 {folder} => 📄: {lengthFiles(getFiles(Path(root)/folder, ignore, récursif))} fichier(s) présent(s)");
             
-def printSummary(root, length, ignore, récursif):
+def printSummary(root, length, folders, ignore, récursif):
     print("===================RESUMER============================");
     print(f" {length} ont été déplacé(s):"); 
     list_folders_default = list(list_extension.keys());
-    list_folders = getFoldersDéfault(root);
+    list_folders = folders;
     for folder in list_folders:
         if folder in list_folders_default or folder == "Others": 
             print(f"{ '❓' if folder == 'Others' else list_icon.get(folder)} {folder} => 📄: {lengthFiles(getFiles(Path(root)/folder, ignore, récursif))} fichier(s) présent(s)");
-
+        else:
+            print(f"📁 {folder} => 📄: {lengthFiles(getFiles(Path(root)/folder, ignore, récursif))} fichier(s) présent(s)");
+        
 # CHECKS
 # Vérifie si il y a un dossier qui existe déjà à la racine avec ce nom
 def folderAlreadyExist(root, filename):
@@ -257,19 +259,23 @@ def sort(root, files, folders, log, guide):
         shutil.move(source, destination);
         if log:
             folder_destination = Path(destination);
-            DetailsMove(file, folder_destination.parent, log);
+            DetailsMove(file, folder_destination.parent, log, guide);
     if log:
         if(cpt == 0):
             AnyMove(log);
 
 # LOGS
 # Si fichiers déplacé
-def DetailsMove(file, destination, log):
+def DetailsMove(file, destination, log, guide):
     source = Path(file).parent;
     filename = Path(file).name;
+    folder = Path(destination).name;
     with open(log, "a") as rapport:
         rapport.write(f"{getTime()}\n");
-        rapport.write(f"LOG: Deplacement du fichier {getIcon(file)} => {filename} située dans ./{source} vers la destination ./{destination} de part son type {getTypeFile(file)} via son extension {getExtension(file)}\n\n");
+        if guide and (getTypeFile(file)) != folder:
+            rapport.write(f"LOG: Deplacement du fichier {getIcon(file)} => {filename} située dans ./{source} vers la destination ./{destination} conformément à votre décision.\n\n");            
+        else:
+            rapport.write(f"LOG: Deplacement du fichier {getIcon(file)} => {filename} située dans ./{source} vers la destination ./{destination} de part son type {getTypeFile(file)} via son extension {getExtension(file)}\n\n");
     rapport.close();
     
 # Sinon aucun fichiers déplacés

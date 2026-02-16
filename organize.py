@@ -159,8 +159,8 @@ if(dry_run):
 else:
     sort(racine, ListFiles, ListFoldersDéfault, log, guide);    
     print("TRI EFFECTUÉ 👍");
-"""    printSummary(racine, NumberFilesToMove, ignore, récursif);    
+    printSummary(racine, NumberFilesToMove, ListFoldersDéfault, ignore, récursif);    
 print("======================================================");
 if(verbose):
     print(f"PRÉCISION DES FICHIERS SITUÉS DANS {racine}\n");
-    printAllExtensionFiles(racine, ListFiles);"""
+    printAllExtensionFiles(racine, ListFiles);
