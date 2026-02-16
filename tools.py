@@ -5,9 +5,10 @@ import shutil
 import datetime
 from pathlib import Path
 
+# Historique des dichiers (Me permet d'avoir le chemin du fichier avant et après le déplacement)
+history = {}
 
 # GETTERS/SETTERS
-
 
 def fileWithoutExtension(file):
     return file.replace(getExtension(file),"");
@@ -108,11 +109,19 @@ def printAllExtensionFiles(root,files):
     for file in files:
         filename = Path(file).name;
         parent = Path(file).parent;
-        print(f"Le fichier {filename}, \n    {getIcon(file)} => située : ./{parent},\n        à été déplacée dans le dossier : {root}/");    
-def printMoveFileLogic(files):
+        print(f"Le fichier {filename}, \n    {getIcon(file)} => située : ./{parent},\n        à été déplacée dans le dossier : ./{history[file]}");    
+def printAllExtensionFilesPrevision(root,files):
+    if len(files) <= 0:
+        print(f"AUCUN FICHIER SITUÉ DANS {root} NI DANS AUCUN SOUS-DOSSIER");
     for file in files:
-        filename = Path(file).name
-        print(f"[DRY-RUN] Le fichier nommé {filename} irait dans {getTypeFile(file)}");
+        filename = Path(file).name;
+        parent = Path(file).parent;
+        print(f"Le fichier {filename}, \n    {getIcon(file)} => située : ./{parent},\n        à été déplacée dans le dossier : {root}/{getExtension(file)}");    
+def printMoveFileLogic(root, files):
+    for file in files:
+        filename = Path(file).name;
+        parent = Path(file).parent;
+        print(f"[DRY-RUN]f Le fichier {filename}, {getIcon(file)} => située : ./{parent}, sera déplacée dans le dossier : {root}/{getTypeFile(file)}");
 def printDataFolderDefault(root, folders, ignore, récursif):
     list_folders_default = list(list_extension.keys());
     list_folders = folders;
@@ -257,6 +266,7 @@ def sort(root, files, folders, log, guide):
             counter+=1;
         cpt += 1;
         shutil.move(source, destination);
+        history[source] = destination;
         if log:
             folder_destination = Path(destination);
             DetailsMove(file, folder_destination.parent, log, guide);

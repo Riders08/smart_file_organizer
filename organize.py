@@ -155,7 +155,7 @@ if not without_log:
     if(detectLog(log) == False):
         create_default_rapport(log);
 if(dry_run):
-    printMoveFileLogic(ListFiles);
+    printMoveFileLogic(racine, ListFiles);
 else:
     sort(racine, ListFiles, ListFoldersDéfault, log, guide);    
     print("TRI EFFECTUÉ 👍");
@@ -163,4 +163,6 @@ else:
 print("======================================================");
 if(verbose):
     print(f"PRÉCISION DES FICHIERS SITUÉS DANS {racine}\n");
-    printAllExtensionFiles(racine, ListFiles);
+    if(dry_run):
+        printAllExtensionFilesPrevision(racine, ListFiles);
+    printAllExtensionFiles(racine,ListFiles);
