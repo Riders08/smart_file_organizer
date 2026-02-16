@@ -107,7 +107,7 @@ if not detectFoldersDefault(racine, ListFiles, ignore):
         print("[DRY-RUN] Création de dossiers par défaut...")
     else:
         print("CONFIGURATION DES DOSSIERS EN COURS...");
-        create_default_folder(racine, ListFiles);
+        create_default_folder(racine, ListFoldersDéfault, ListFiles);
 print("CONFIGURATION DES DOSSIERS OK");
 print("======================================================");
 if(guide):

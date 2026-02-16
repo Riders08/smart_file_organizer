@@ -194,7 +194,7 @@ def create_folder_user(root,filename):
             print(f"CRÉATION DU DOSSIER {filename} EFFECTUÉE AVEC SUCCÈS")
 
 # Initialisation des dossiers
-def create_default_folder(root, files):
+def create_default_folder(root, foldersDéfault, files):
     ListExtensionNecessary = [];
     for file in files:
         ListExtensionNecessary.append(getExtension(file));
@@ -206,13 +206,15 @@ def create_default_folder(root, files):
                     continue;
                 else:
                     os.mkdir(Path(root) / chemin.name);
+                    foldersDéfault.append(element);
     if(detectFileOther(files)):
-        create_default_folder_other(root);
+        create_default_folder_other(root, foldersDéfault);
 
 # Initialise un dossier Others si on a des fichiers avec une extension inconnue au bataillon
-def create_default_folder_other(root):
+def create_default_folder_other(root, foldersDéfault):
     if(os.path.exists(Path(root) / "Others") == False):
         os.mkdir(Path(root) / "Others");
+        foldersDéfault.append("Others");
 
 def create_default_rapport(log):
     rapport = open(log, "w");
@@ -224,23 +226,18 @@ def create_default_rapport(log):
 
 # Fonction qui tri les fichier du dossiers choisi dans les dossiers correspondant à leur nature
 def sort(root, files, folders, log, guide):
-    if(detectFileOther(files)):
-        folders.append("Others");
-    print(folders);
     cpt = 0;
     for file in files: 
         chemin = Path(file); # Chemin du fichier depuis la racine
         filename = chemin.name; # Le nom du fichier avec extension
         type_file = getTypeFile(file); # Le type de fichier
         source = file; # La source du fichier de base
-        folder_to_push; # Le dossier qui acceuillera le fichier
-        destination; # Le chemin du dossier qui aura le fichier
+        folder_to_push = ""; # Le dossier qui acceuillera le fichier
         if guide: 
-            question = input(f"Où doit  allez le fichier {filename} ?");
-            print(question);
+            folder_to_push = Path(root) / sort_guide(folders ,filename);
         else:
             folder_to_push = Path(root) / type_file;
-            destination = folder_to_push / filename;
+        destination = folder_to_push / filename; # Le chemin du dossier qui aura le fichier
         counter = 1;
         while(destination.exists()):
             if(counter == 1):
@@ -274,3 +271,19 @@ def AnyMove(log):
         rapport.write(f"{getTime()}\n");
         rapport.write(f"AUCUN FICHIER DÉPLACÉ.\n\n");
     rapport.close();
+    
+def sort_guide(folders, filename):
+    for folder, element in enumerate(folders, start=1):
+        print(f"Tapez {folder} pour {element}");
+    while True:
+        question = input(f"Où doit allez le fichier {filename} ?\n").strip();
+
+        if question.isdigit():
+            reponse = int(question);
+
+            if 1 <= reponse <= len(folders):
+                break
+
+        print("Choix invalide, recommencez.");
+    folder_selected = folders[reponse - 1];
+    return folder_selected;
