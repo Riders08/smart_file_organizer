@@ -46,7 +46,13 @@ parser.add_argument(
     "--récursif",
     action="store_true",
     help="Mode récursif, consistant à appliquer le tri dans tous les dossiers du dossier cible donné"
-)
+);
+
+parser.add_argument(
+    "--guide",
+    action="store_true",
+    help="Mode interactif qui vous propose divers points tout au long du programme."
+);
 
 args = parser.parse_args();
 
@@ -63,13 +69,16 @@ else:
         log = log.with_suffix(".log"); 
 ignore = None if args.ignore == None else args.ignore; # Mode ignore
 récursif = args.récursif; # Mode récursif
-
-# IL NOUS FAUT: 
-# un mode guidage/intéractif (proposer différent cas à l'utilisateur)
+guide = args.guide; # Mode intéractif
 
 if(args.without_log and args.log):
     print("❌ Impossible : vous ne pouvez pas demander à ne pas avoir de log et définir un fichier log en même temps !");
     exit(1);
+
+if(args.dry_run and args.guide):
+    print("❌ Impossible : vous ne pouvez pas demander à avoir un mode de guidage sur le mode de test !");
+    exit(1);
+
 
 print("======================================================");
 print("INITIALISATION...");
@@ -79,6 +88,7 @@ print(f"Mode Simulation => {'Activé'if dry_run else 'Désactivé'}");
 print(f"Mode Verbeux => {'Activé' if verbose else 'Désactivé'}");
 print(f"Mode Ignore => {'Désactivé' if ignore == None else 'Activé'}");
 print(f"Mode Récursif => {'Activé' if récursif else 'Désactivé'}");
+print(f"Mode Intéractif => {'Activé' if guide else 'Désactivé'}");
 print("======================================================");
 
 ListFolders = getFolders(racine, ignore, récursif); # Liste(s) de(s) dossier(s) dans le dossier racine ainsi que les sous-dossiers compris (Qui ne sont pas ignorer)
