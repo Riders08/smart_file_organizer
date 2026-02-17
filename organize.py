@@ -101,6 +101,7 @@ print(NumberFilesToMove);
 print("NOMBRES DE DOSSIERS (Hors dossiers de bases + dossiers ignorés)");
 print(lengthFolders(ListFolders));
 
+history.clear();
 print("======================================================");
 if not detectFoldersDefault(racine, ListFiles, ignore):
     if(dry_run):
@@ -158,6 +159,7 @@ if(dry_run):
     printMoveFileLogic(racine, ListFiles);
 else:
     sort(racine, ListFiles, ListFoldersDéfault, log, guide);    
+    check_folders(ListFolders);
     print("TRI EFFECTUÉ 👍");
     printSummary(racine, NumberFilesToMove, ListFoldersDéfault, ignore, récursif);    
 print("======================================================");

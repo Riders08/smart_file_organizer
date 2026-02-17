@@ -143,6 +143,14 @@ def printSummary(root, length, folders, ignore, récursif):
             print(f"📁 {folder} => 📄: {lengthFiles(getFiles(Path(root)/folder, ignore, récursif))} fichier(s) présent(s)");
         
 # CHECKS
+
+# Vérifie l'états des dossiers et si l'un d'entre eux est vide on propose la suppression de celui-ci
+def check_folders(folders):
+    for folder in folders:
+        if(len(os.listdir(folder)) == 0):
+            deleteFolder(folder);
+        
+
 # Vérifie si il y a un dossier qui existe déjà à la racine avec ce nom
 def folderAlreadyExist(root, filename):
     for element in os.listdir(root):
@@ -323,6 +331,22 @@ def IsSure(filename, type_file, choix):
         elif question in ["n", "no", "non"]:
             ok = True;
             print(f"Très bien, dans ce cas votre fichier va être déplacé dans le dossier recommandé {type_file}");
+            return False;
+        else:
+            ok = False;
+            print("Vous n'avez pas répondu à la question, veuillez repondre par oui ou non."); 
+
+def deleteFolder(folder):
+    print(f"Suite à l'exécution de votre tri, le dossier {folder} est vide.");
+    ok = False;
+    while ok is not True:
+        question = input("Souhaitez-vous supprimer ce dossier ?\n(Yes/No)\n");
+        if question in ["o", "oui", "y", "yes", "", "ou", "ye"]:
+            ok = True;
+            os.rmdir(folder);
+        elif question in ["n", "no", "non"]:
+            ok = True;
+            print(f"Le dossier n'a pas été supprimé");
             return False;
         else:
             ok = False;
