@@ -158,8 +158,9 @@ if not without_log:
 if(dry_run):
     printMoveFileLogic(racine, ListFiles);
 else:
-    sort(racine, ListFiles, ListFoldersDéfault, log, guide);    
-    check_folders(ListFolders);
+    sort(racine, ListFiles, ListFoldersDéfault, log, guide);   
+    for folder in ListFolders: 
+        check_folders(folder, récursif, ignore);
     print("TRI EFFECTUÉ 👍");
     printSummary(racine, NumberFilesToMove, ListFoldersDéfault, ignore, récursif);    
 print("======================================================");
