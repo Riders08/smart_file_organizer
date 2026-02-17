@@ -71,6 +71,11 @@ ignore = None if args.ignore == None else args.ignore; # Mode ignore
 récursif = args.récursif; # Mode récursif
 guide = args.guide; # Mode intéractif
 
+if(racine):
+    if not (os.path.isdir(racine)):
+        print("Le dossier racine n'existe pas, veuillez rentrer un chemin valide.");
+        exit(1);
+
 if(args.without_log and args.log):
     print("❌ Impossible : vous ne pouvez pas demander à ne pas avoir de log et définir un fichier log en même temps !");
     exit(1);
