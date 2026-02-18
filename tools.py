@@ -1,5 +1,5 @@
 # Fichiers avec fonctions et tous autres types d'outils nécessaire au bon fonctionnement du projet
-from config import list_extension, list_icon
+from config import *
 import os
 import shutil
 import datetime
@@ -214,10 +214,10 @@ def detectLog(log):
 def create_folder_user(root,filename):
         chemin =Path(root)/filename;
         if(os.path.isdir(chemin)):
-            print(f"ERREUR : UN DOSSIER DU MÊME NOM EXISTE DÉJÀ ET A ÉTÉ TROUVÉ : ./{chemin}");
+            print(f"{RED}ERREUR{RESET}: UN DOSSIER DU MÊME NOM EXISTE DÉJÀ ET A ÉTÉ TROUVÉ : ./{chemin}");
         else:
             os.mkdir(Path(root)/ filename);
-            print(f"CRÉATION DU DOSSIER {filename} EFFECTUÉE AVEC SUCCÈS")
+            print(f"{GREEN}CRÉATION DU DOSSIER {filename} EFFECTUÉE AVEC SUCCÈS{RESET}");
 
 # Initialisation des dossiers
 def create_default_folder(root, foldersDéfault, files):

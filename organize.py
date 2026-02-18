@@ -1,7 +1,9 @@
 # Fichier main
 import argparse
+import sys
 import os
 from tools import *
+
 
 parser = argparse.ArgumentParser(description="Organisateur de fichier");
 
@@ -76,7 +78,7 @@ if(racine):
         print("Le dossier racine n'existe pas, veuillez rentrer un chemin valide.");
         exit(1);
 
-if(args.without_log and args.log):
+if(args.without_log and "--log" in sys.argv): 
     print("❌ Impossible : vous ne pouvez pas demander à ne pas avoir de log et définir un fichier log en même temps !");
     exit(1);
 
@@ -88,12 +90,12 @@ if(args.dry_run and args.guide):
 print("======================================================");
 print("INITIALISATION...");
 print(f"Dossier cible => {racine}");
-print(f"Mode Log => {'Désactivé' if without_log else log}");
-print(f"Mode Simulation => {'Activé'if dry_run else 'Désactivé'}");
-print(f"Mode Verbeux => {'Activé' if verbose else 'Désactivé'}");
-print(f"Mode Ignore => {'Désactivé' if ignore == None else 'Activé'}");
-print(f"Mode Récursif => {'Activé' if récursif else 'Désactivé'}");
-print(f"Mode Intéractif => {'Activé' if guide else 'Désactivé'}");
+print(f"Mode Log => {RED if without_log else WHITE}{ 'Désactivé' if without_log else log}{RESET}");
+print(f"Mode Simulation => {GREEN if dry_run else RED}{'Activé'if dry_run else 'Désactivé'}{RESET}");
+print(f"Mode Verbeux => {GREEN if verbose else RED}{'Activé' if verbose else 'Désactivé'}{RESET}");
+print(f"Mode Ignore => {RED if ignore == None else GREEN}{'Désactivé' if ignore == None else 'Activé'}{RESET}");
+print(f"Mode Récursif => {GREEN if récursif else RED}{'Activé' if récursif else 'Désactivé'}{RESET}");
+print(f"Mode Intéractif => {GREEN if guide else RED}{'Activé' if guide else 'Désactivé'}{RESET}");
 print("======================================================");
 
 ListFolders = getFolders(racine, ignore, récursif); # Liste de(s) dossier(s) dans le dossier racine ainsi que les sous-dossiers compris (Qui ne sont pas ignorer)
@@ -114,10 +116,10 @@ if not detectFoldersDefault(racine, ListFiles, ignore):
     else:
         print("CONFIGURATION DES DOSSIERS EN COURS...");
         create_default_folder(racine, ListFoldersDéfault, ListFiles);
-print("CONFIGURATION DES DOSSIERS OK");
+print(f"{GREEN}CONFIGURATION DES DOSSIERS OK{RESET}");
 print("======================================================");
 if(guide):
-    print("BIENVENUE DANS LE MODE INTERACTIF");
+    print(f"BIENVENUE DANS LE MODE {YELLOW}INTERACTIF{RESET}");
     ok = False
     print(f"Avant d'effectuer le tri du dossier {racine}, ");
     while ok is not True:
@@ -131,7 +133,7 @@ if(guide):
                     print("Vous n'avez pas donnez de nom à votre dossier spécifique.");
                 else:
                     if(folderAlreadyExist(racine,reponse_name_folder)):
-                        print("Un dossier du même nom existe déjà, veuillez choisir un autre nom.");
+                        print(f"{RED}ERREUR{RESET}: UN DOSSIER DU MÊME NOM EXISTE DÉJÀ ET A ÉTÉ TROUVÉ.");
                     else: 
                         create_folder_user(racine, reponse_name_folder);
                         ListFoldersDéfault.append(reponse_name_folder);
@@ -145,7 +147,7 @@ if(guide):
                                 name_ok = True;
                                 finish_ok = True;
                             else:
-                                print("Vous n'avez pas répondu à la question, veuillez repondre par oui ou non."); 
+                                print(f"Vous n'avez pas répondu à la question, veuillez repondre par oui ou non."); 
         elif reponse in ["n", "no", "non", ""]:
             ok = True;
         else:
@@ -153,7 +155,7 @@ if(guide):
     print("======================================================");
 print("ÉTAT DES DOSSIERS AVANT TRI");
 if not detectFoldersDefault(racine, ListFiles, ignore):
-    print("PROBLÈME DE CRÉATION DE DOSSIERS DE TRI");
+    print(f"{RED}PROBLÈME DE CRÉATION DE DOSSIERS DE TRI{RESET}");
 else:
     printDataFolderDefault(racine, ListFoldersDéfault, ignore, récursif);
 print("======================================================");
@@ -166,11 +168,12 @@ else:
     sort(racine, ListFiles, ListFoldersDéfault, log, guide);   
     for folder in ListFolders: 
         check_folders(folder, récursif, ignore);
-    print("TRI EFFECTUÉ 👍");
+    print(f"{GREEN}TRI EFFECTUÉ 👍{RESET}");
     printSummary(racine, NumberFilesToMove, ListFoldersDéfault, ignore, récursif);    
 print("======================================================");
 if(verbose):
     print(f"PRÉCISION DES FICHIERS SITUÉS DANS {racine}\n");
     if(dry_run):
         printAllExtensionFilesPrevision(racine, ListFiles);
-    printAllExtensionFiles(racine,ListFiles);
+    else:
+        printAllExtensionFiles(racine,ListFiles);
